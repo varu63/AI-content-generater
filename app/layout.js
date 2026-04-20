@@ -16,15 +16,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en"  className="dark"suppressHydrationWarning>
       <head>{/* <link rel="icon" href="/logo-text.png" sizes="any" /> */}</head>
       <body className={`${inter.className}`}>
-        <ThemeProvider
+        {/* <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
-        >
+        > */}
           <ClerkProvider
             publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
             appearance={{
@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
               </main>
             </ConvexClientProvider>
           </ClerkProvider>
-        </ThemeProvider>
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );

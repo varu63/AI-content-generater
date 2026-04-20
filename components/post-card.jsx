@@ -125,7 +125,7 @@ const PostCard = ({
 
             {showActions && (
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+                <DropdownMenuTrigger >
                   <Button variant="ghost" size="icon" className="flex-shrink-0">
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>

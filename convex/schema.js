@@ -5,8 +5,8 @@ export default defineSchema({
   // Users table
   users: defineTable({
     // Basic user info from Clerk
-    name: v.string(),
-    email: v.string(),
+    name: v.optional(v.string()), // Optional for anonymous users
+    email: v.optional(v.string()), // Optional for anonymous users
     tokenIdentifier: v.string(), // Clerk user ID for auth
     imageUrl: v.optional(v.string()), // Profile picture
     username: v.optional(v.string()), // Unique username for public profiles

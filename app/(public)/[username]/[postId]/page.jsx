@@ -27,30 +27,31 @@ import { BarLoader } from "react-spinners";
 const PostPage = ({ params }) => {
   const { username, postId } = React.use(params);
   const { user: currentUser } = useUser();
+  const isValidPost = postId && postId !== "create";  
 
-  const { data: currentConvexUser } = useConvexQuery(
+ const { data: currentConvexUser } = useConvexQuery(
     api.users.getCurrentUser,
     currentUser ? {} : "skip"
   );
 
-  const [commentContent, setCommentContent] = useState("");
-
-  const {
-    data: post,
-    isLoading: postLoading,
-    error: postError,
-  } = useConvexQuery(api.public.getPublishedPost, { username, postId });
+  const { data: post, isLoading: postLoading, error: postError } = useConvexQuery(
+    api.public.getPublishedPost,
+    isValidPost ? { username, postId } : "skip"  // ← fix
+  );
 
   const { data: comments, isLoading: commentsLoading } = useConvexQuery(
     api.comments.getPostComments,
-    { postId }
+    isValidPost ? { postId } : "skip"  // ← fix
   );
 
-  // Get like status for current user
   const { data: hasLiked } = useConvexQuery(
     api.likes.hasUserLiked,
-    currentUser ? { postId } : "skip"
+    currentUser && isValidPost ? { postId } : "skip"  // ← fix
   );
+  if (!isValidPost) {
+    notFound();
+  }
+
 
   const toggleLike = useConvexMutation(api.likes.toggleLike);
 
@@ -60,6 +61,7 @@ const PostPage = ({ params }) => {
   const deleteComment = useConvexMutation(api.comments.deleteComment);
 
   const incrementView = useConvexMutation(api.public.incrementViewCount);
+
 
   // Track view when post loads
   useEffect(() => {

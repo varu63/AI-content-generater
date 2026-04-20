@@ -24,12 +24,16 @@ export const store = mutation({
       }
       return user._id;
     }
+    
 
     // If it's a new identity, create a new `User`.
     return await ctx.db.insert("users", {
-      name: identity.name ?? "Anonymous",
+      // name: identity.name ?? "Anonymous",
+       name: identity.name !== undefined && identity.name !== null && identity.name !== ""
+    ? identity.name
+    : (identity.givenName ?? identity.familyName ?? "Anonymous"),
       tokenIdentifier: identity.tokenIdentifier,
-      email: identity.email,
+      email: identity.email ?? "",
       imageUrl: identity.pictureUrl,
       createdAt: Date.now(),
       lastActiveAt: Date.now(),
